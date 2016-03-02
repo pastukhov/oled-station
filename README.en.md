@@ -1,11 +1,13 @@
 # oled-station
 
-The station for displaying different info  on the screen via MQTT protocol
+The station for displaying any kind of info  on the screen via MQTT protocol. Inspired by https://github.com/nfriedly/nodemcu-weather-station.
+
+At this moment the device can display  time, weather (temperature humidity pressure and dark sky icon from http://forecast.io), text message, image. Any other type of information to display can be easy added, look at software part of this README.
 
 [![Demo video](http://img.youtube.com/vi/x8hI9_JtbBE/0.jpg)](http://www.youtube.com/watch?v=x8hI9_JtbBE)
 
 
-## Hardware parts
+## Hardware
 * esp8266 with NodeMCU
 * OLED screen http://goo.gl/Cxhwoh
 * RTC http://goo.gl/zzWak4
@@ -13,10 +15,19 @@ The station for displaying different info  on the screen via MQTT protocol
 * Variety small supplies
 * Structor http://amperka.ru/collection/structor
 
+![The device itself](https://github.com/pastukhov/oled-station/raw/master/images/0.jpg)
+ 
+![Parts inside](https://github.com/pastukhov/oled-station/raw/master/images/1.jpg)
+
+![Parts 2](https://github.com/pastukhov/oled-station/raw/master/images/2.jpg)
+
+
+
 ## Software
 
-This device can display  time, weather, text message, image. 
-Can be easy extended to display any other kind of information:
+Device connect to MQTT broker and subscribe to ```oled/events/+```
+When a message arrives module will run a handler according to the last part of a topic.
+
 ```lua
 mqtt:on("message", function(conn, topic, data)
     local start = tmr.now()
