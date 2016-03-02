@@ -54,4 +54,4 @@ mqtt:on("message", function(conn, topic, data)
     collectgarbage()
 end)
 ```
-Controlled with  Node-RED flows:
+Controlled with [Node-RED flows](https://github.com/pastukhov/oled-station/raw/master/node-red_flow.json)
