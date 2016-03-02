@@ -1,25 +1,24 @@
 # oled-station
 
-Станция для отображения на экране раазличной информации с помощью протокола MQTT
+The station for displaying different info  on the screen via MQTT protocol
 
-[![Демонстрация работы](http://img.youtube.com/vi/x8hI9_JtbBE/0.jpg)](http://www.youtube.com/watch?v=x8hI9_JtbBE)
+[![Demo video](http://img.youtube.com/vi/x8hI9_JtbBE/0.jpg)](http://www.youtube.com/watch?v=x8hI9_JtbBE)
 
 
-## Аппаратные компоненты
-* esp8266 с NodeMCU на борту
-* OLED экран http://goo.gl/Cxhwoh
-* Часы реального времени http://goo.gl/zzWak4
-* MicroUSB разьем для питания http://goo.gl/yqudYL
-* Мелкие запчасти
-* Структор http://amperka.ru/collection/structor
+## Hardware parts
+* esp8266 with NodeMCU
+* OLED screen http://goo.gl/Cxhwoh
+* RTC http://goo.gl/zzWak4
+* MicroUSB socket for powering http://goo.gl/yqudYL
+* Variety small supplies
+* Structor http://amperka.ru/collection/structor
 
-## Програмные компоненты
+## Software
 
-Устройство умеет отображать время, погоду, текстовое сообщение, картинку. 
-Легко может быть расширена добавлением новых типов информации в обрабтчик сообщений :
+This device can display  time, weather, text message, image. 
+Can be easy extended to display any other kind of information:
 ```lua
 mqtt:on("message", function(conn, topic, data)
---    tmr.stop(1)
     local start = tmr.now()
     print(topic,node.heap())
             if  topic:match('weather$') then
@@ -38,16 +37,13 @@ mqtt:on("message", function(conn, topic, data)
                 dolc('save',data)
             end
 
---    print(node.heap(),'bytes',tmr.now() - start, 'miliseconds', topic)
-    
---    mqtt:publish('oled/status',cjson.encode({tstamp = tmr.time(), data = {memory = node.heap(),miliseconds = tmr.now() - start, topic = topic }}),0,0)
     data = nil
     topic =nil
          
     collectgarbage()
 end)
 ```
-Для управления используется потоки на Node-RED
+Controlled with  Node-RED flows:
 ```JSON
 [  
    {  
